@@ -1,0 +1,39 @@
+---
+title: "Week1"
+author: "Ivy Fernandes"
+date: "5/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1.2
+```{r}
+#Code Challenge: Implement PatternCount (reproduced below).
+#     Input: Strings Text and Pattern.
+#     Output: Count(Text, Pattern).
+data<-read.delim("data/dataset_2_7.txt",header=FALSE, sep="\n") %>% unlist
+#want to do header = FALSE or else the first string will become a header in the table being created using the read.delim function. 
+class(data)
+seq<-data[1]
+pattern<-data[2]
+View(seq)
+View(pattern)
+#install.packages("stringr")
+library("stringr")
+# count the number of times the pattern appears in sequence
+#another package that seems to serve the same function is gregexpr
+#utilizing the str_count function that is within the stringr package downloaded
+count<-str_count(seq,pattern)
+count
+#this does not count overlapping regions
+#online it says to use look-ahead to overcome this
+  #add ?... where ... is your pattern
+count_all<-str_count(seq,pattern)
+count_all<-str_count(seq, str_c("(?=",pattern,")"))
+count_all
+```
+
+
