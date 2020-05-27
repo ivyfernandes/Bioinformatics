@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 1.2
+## 1.2 challenge #1
 ```{r}
 #Code Challenge: Implement PatternCount (reproduced below).
 #     Input: Strings Text and Pattern.
@@ -36,4 +36,50 @@ count_all<-str_count(seq, str_c("(?=",pattern,")"))
 count_all
 ```
 
+## 1.2 challenge #2
+```{r}
+# Code Challenge: Solve the Frequent Words Problem.
+# Input: A string Text and an integer k.
+# Output: All most frequent k-mers in Text.
+# This will be my first time creating my own function in R. First I want to define this function called "frequentwords" and specify the inputs
+#text will be the entire string of text that will be analyzed for patterns while k is the number of nucliotides within the substring of text
+# we want this function to identify the patterns that occur the most, so we need it to be able to count how frequently these patterns appear
+data2<-read.delim("data/dataset_2_10.txt",header=FALSE, sep="\n")
+data2<-unlist(data2)
+text<-data2[1]
+  k<-data2[2]
+  k<-as.numeric(k)
+  frequentpatterns<- c()
+#want to be able to identify these patterns, so they will be listed into this data frame that will start out as empty and be populated as the text is read
+#we want the frequent words function to move along the "text" from the starting point (i) to the ending point
+start<-1
+  end<-nchar(text)-k
+  maxcount<-0
+for (i in start:end){
+  pattern<- substr(text,i,i+k-1)
+  #print(pattern) 
+  count<-str_count(text, str_c("(?=",pattern,")"))
+  #print(count)
+  if (count>maxcount){
+    maxcount<-count
+  }
+}
+print(maxcount)
 
+# Now that we have identified the maximum amount of times a string, or various strings, appear, we want to identify what those strings are
+
+for (i in start:end){
+  pattern<- substr(text,i,i+k-1)
+  #print(pattern) 
+  count<-str_count(text, str_c("(?=",pattern,")"))
+  #print(count)
+  if (count== maxcount){
+  frequentpatterns<- c(frequentpatterns,pattern)
+  }
+}
+
+#removeduplicates
+frequentpatterns<-unique(frequentpatterns)
+
+print(frequentpatterns)
+```
